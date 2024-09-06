@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IEmpleado } from '../interfaces/empleado';
 import { CommonModule } from '@angular/common';
 
@@ -7,37 +7,20 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './listado.component.html',
-  styleUrl: './listado.component.css'
+  styleUrls: ['./listado.component.css']  // Corrección aquí
 })
-export class ListadoComponent {
 
+export class ListadoComponent {
   etiquetaBorrado: string = '';
 
-  empleados: IEmpleado[] = [
-    {
-      nombres: 'carlos',
-      apellidos: 'guerra',
-      direccion: 'asdasdad',
-      sueldo: 5000
-    },
-    {
-      nombres: 'ivan',
-      apellidos: 'cordoba',
-      direccion: 'asdasdadddddd',
-      sueldo: 4000
-    },
-    {
-      nombres: 'mildred',
-      apellidos: 'beatriz',
-      direccion: 'Eu',
-      sueldo: 3000
-    }
-  ];
+  //Hijo recive un valor de otro componente
+  @Input() empleados: IEmpleado[] = [];
+  @Input() titulo: string = "";
 
-  borrar(){    
+  borrar() {
     const empl = this.empleados.shift();
     if (empl !== undefined) {
-      this.etiquetaBorrado = empl?.nombres + '' + empl?.apellidos;      
+      this.etiquetaBorrado = empl.nombres + ' ' + empl.apellidos;
     } else {
       this.etiquetaBorrado = '';
     }

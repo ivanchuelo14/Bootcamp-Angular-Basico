@@ -1,4 +1,4 @@
-<p>listado completo</p>
+<p>listado completo {{titulo}}</p>
 <ul>
     <!-- //Como un foreach -->
     <button (click)="borrar()">Borrar</button>
@@ -15,8 +15,8 @@
     <li *ngFor="let item of empleados">
         <!-- pipes para cambiar el formato de visualizacion-->
         {{item.nombres | titlecase}} {{item.apellidos | titlecase}}
-        {{item.direccion | uppercase}} 
-        {{item.sueldo | currency}} 
+        {{item.direccion | uppercase}}
+        {{item.sueldo | currency}}
         <hr>
-    </li>    
+    </li>
 </ul>

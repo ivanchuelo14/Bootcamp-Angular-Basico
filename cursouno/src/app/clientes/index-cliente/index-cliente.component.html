@@ -1,0 +1,26 @@
+<h3>Listado de Clientes</h3>
+<div class="row">
+    <div class="col">
+        <h3>Clientes</h3>
+        <hr>
+        <ul>
+            <li *ngFor="let item of listClient">
+                {{item.nombre}} -{{item.credito | number}}
+            </li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>Add</h3>
+        <hr>
+        <!-- Interpolacion cambiante en tiempo real -->
+        <p>{{clienteObj.nombre}}</p>
+        <!-- <form (submit)="agregarFormJs($event)"> -->
+        <form (submit)="agregarAngularSubmit()">
+            <input type="text" placeholder="Nombre" name="nombre" [(ngModel)]="clienteObj.nombre" />
+            <input type="number" placeholder="Credito" name="credito" [(ngModel)]="clienteObj.credito" />
+            <button type="submit">
+                Agregar
+            </button>
+        </form>
+    </div>
+</div>
