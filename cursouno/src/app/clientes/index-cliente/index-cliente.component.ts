@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ICliente } from '../interfaces/cliente';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ListClienteComponent } from "../list-cliente/list-cliente.component";
 
 @Component({
   selector: 'app-index-cliente',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ListClienteComponent],
   templateUrl: './index-cliente.component.html',
   styleUrl: './index-cliente.component.css'
 })

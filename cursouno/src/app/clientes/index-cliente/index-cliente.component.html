@@ -1,13 +1,8 @@
 <h3>Listado de Clientes</h3>
 <div class="row">
     <div class="col">
-        <h3>Clientes</h3>
-        <hr>
-        <ul>
-            <li *ngFor="let item of listClient">
-                {{item.nombre}} -{{item.credito | number}}
-            </li>
-        </ul>
+        <!-- Esto es una forma de separar componentes -->
+        <app-list-cliente [listClient]="listClient"></app-list-cliente>
     </div>
     <div class="col">
         <h3>Add</h3>

@@ -1,0 +1,7 @@
+<h3>Clientes</h3>
+<hr>
+<ul>
+    <li *ngFor="let item of listClient">
+        {{item.nombre}} -{{item.credito | number}}
+    </li>
+</ul>
