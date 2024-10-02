@@ -3,11 +3,12 @@ import { ICliente } from '../interfaces/cliente';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ListClienteComponent } from "../list-cliente/list-cliente.component";
+import { AgregarClienteComponent } from '../agregar-cliente/agregar-cliente.component';
 
 @Component({
   selector: 'app-index-cliente',
   standalone: true,
-  imports: [FormsModule, CommonModule, ListClienteComponent],
+  imports: [FormsModule, CommonModule, ListClienteComponent, AgregarClienteComponent],
   templateUrl: './index-cliente.component.html',
   styleUrl: './index-cliente.component.css'
 })
@@ -15,11 +16,6 @@ import { ListClienteComponent } from "../list-cliente/list-cliente.component";
 export class IndexClienteComponent implements OnInit {
 
   ngOnInit(): void {
-  }
-
-  clienteObj: ICliente = {
-    nombre: '',
-    credito: 0
   }
 
   listClient: ICliente[] = [
@@ -39,20 +35,8 @@ export class IndexClienteComponent implements OnInit {
     console.log("Eu");
   }
 
-  //Aqui ya mapeamos la inforamcion de los formularios 
-  agregarAngularSubmit() {
-
-    if (this.clienteObj.nombre.trim().length === 0) {
-      return;
-    }
-    if (this.clienteObj.credito === null)
-      return;
-
-    this.listClient.push(this.clienteObj);
-    console.log(this.clienteObj);
-    this.clienteObj = {
-      nombre: '',
-      credito: 0
-    }
+  agregarNuevoCliente(cliente: ICliente) {
+    this.listClient.push(cliente);
   }
+
 }

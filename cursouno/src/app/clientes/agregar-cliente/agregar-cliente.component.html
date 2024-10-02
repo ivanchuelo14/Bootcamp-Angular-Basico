@@ -1,0 +1,12 @@
+<h3>Add (Componente agregar)</h3>
+<hr>
+<!-- Interpolacion cambiante en tiempo real -->
+<p>{{clienteObj.nombre}}</p>
+<!-- <form (submit)="agregarFormJs($event)"> -->
+<form (submit)="agregarAngularSubmit()">
+    <input type="text" placeholder="Nombre" name="nombre" [(ngModel)]="clienteObj.nombre" />
+    <input type="number" placeholder="Credito" name="credito" [(ngModel)]="clienteObj.credito" />
+    <button type="submit">
+        Agregar
+    </button>
+</form>
