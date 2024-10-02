@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, output } from '@angular/core';
 import { ICliente } from '../interfaces/cliente';
 import { FormsModule } from '@angular/forms';
+import { ClienteService } from '../cliente.service';
 
 @Component({
   selector: 'app-agregar-cliente',
@@ -17,9 +18,12 @@ export class AgregarClienteComponent {
     credito: 0
   }
 
+  constructor(private clienteService: ClienteService) {
+  }
+
   //Envia y con on inicial
-  @Output()
-  onNuevoCliente: EventEmitter<ICliente> = new EventEmitter();
+  // @Output()
+  // onNuevoCliente: EventEmitter<ICliente> = new EventEmitter();
 
   agregarAngularSubmit() {
 
@@ -29,8 +33,11 @@ export class AgregarClienteComponent {
     if (this.clienteObj.credito === null)
       return;
 
-    //Envia el valor a otro componente
-    this.onNuevoCliente.emit(this.clienteObj);
+    //Envia el valor a otro componente con decoraor
+    // this.onNuevoCliente.emit(this.clienteObj);
+
+    //Con servicio
+    this.clienteService.agregarCliente(this.clienteObj);
 
     this.clienteObj = {
       nombre: '',

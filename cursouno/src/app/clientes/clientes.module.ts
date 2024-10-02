@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IndexClienteComponent } from './index-cliente/index-cliente.component';
 import { FormsModule } from '@angular/forms';
 import { ListClienteComponent } from './list-cliente/list-cliente.component';
-import { AgregarClienteComponent } from './agregar-cliente/agregar-cliente.component';
+import { ClienteService } from './cliente.service';
 
 @NgModule({
   declarations: [],
@@ -16,6 +16,9 @@ import { AgregarClienteComponent } from './agregar-cliente/agregar-cliente.compo
     IndexClienteComponent,
     FormsModule,
     ListClienteComponent
+  ],
+  providers:[
+    ClienteService
   ]
 })
 export class ClientesModule { }

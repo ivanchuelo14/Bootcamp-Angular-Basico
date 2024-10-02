@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ListClienteComponent } from "../list-cliente/list-cliente.component";
 import { AgregarClienteComponent } from '../agregar-cliente/agregar-cliente.component';
+import { ClienteService } from '../cliente.service';
 
 @Component({
   selector: 'app-index-cliente',
@@ -15,28 +16,20 @@ import { AgregarClienteComponent } from '../agregar-cliente/agregar-cliente.comp
 
 export class IndexClienteComponent implements OnInit {
 
+  constructor() {    
+  }
+
   ngOnInit(): void {
   }
 
-  listClient: ICliente[] = [
-    {
-      nombre: "Carlos",
-      credito: 100
-    },
-    {
-      nombre: "Ivan",
-      credito: 200
-    }
-  ]
+  // agregarFormJs(evento: any) {
+  //   //Evita que no refresque la pantalla :O ajjaja esto es JS puro
+  //   evento?.preventDefault();
+  //   console.log("Eu");
+  // }
 
-  agregarFormJs(evento: any) {
-    //Evita que no refresque la pantalla :O ajjaja esto es JS puro
-    evento?.preventDefault();
-    console.log("Eu");
-  }
-
-  agregarNuevoCliente(cliente: ICliente) {
-    this.listClient.push(cliente);
-  }
+  // agregarNuevoCliente(cliente: ICliente) {
+  //   //this.clienteService.getClientes.push(cliente);
+  // }
 
 }
