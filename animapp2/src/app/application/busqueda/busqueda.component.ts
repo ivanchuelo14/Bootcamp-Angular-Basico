@@ -16,6 +16,6 @@ export class BusquedaComponent {
   constructor(private applicationService: ApplicationService) { }
 
   busqueda() {
-    this.applicationService.buscarGift();
+    this.applicationService.buscarGift(this.buscar);
   }
 }
