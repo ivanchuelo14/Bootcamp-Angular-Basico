@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(to right, #25242482, #a0a19f63), url(../src/assets/img/fondo.jpg);
+    font-weight: 400;
+    line-height: 1.7;
+    padding: 1.875rem;
+}
+
+.header {
+    height: 20vh;
+    background: linear-gradient(to right, #2b34bab3, #3a3b42);
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0, 100%);
+}
+
+.heading-primary {
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1.5rem;
+}
