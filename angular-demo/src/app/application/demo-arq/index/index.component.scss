@@ -1,12 +1,23 @@
-.dog-card {
+// General para todas las cards personalizadas
+.custom-card {
+    border: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  // Estilos para la tarjeta de imágenes de perros
+  .dog-card {
     border: 2px solid #eee;
     border-radius: 10px;
     overflow: hidden;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
     
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     }
     
     img {
@@ -16,44 +27,77 @@
     }
   }
   
-  .input-group {
+  // Estilos para el contenedor del ng-select
+  .select-wrapper {
     max-width: 500px;
     margin: 0 auto;
-    
-    input {
+  }
+  
+  // Opcional: estilos personalizados para ng-select (ajusta según la documentación)
+  .custom-ng-select {
+    .ng-select-container {
       border-radius: 25px;
-      padding: 12px 20px;
-      font-size: 1rem;
-      
-      &:focus {
-        border-color: #4b7cf3;
-        box-shadow: 0 0 0 0.2rem rgba(75, 124, 243, 0.25);
-      }
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      height: 45px;
+    }
+    .ng-select-container:hover {
+      border-color: #4b7cf3;
     }
   }
-
+  
+  // Efecto para imágenes seleccionables
   .selectable-image {
-    cursor: pointer;
     transition: transform 0.2s ease-in-out;
   }
   
   .selectable-image:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   
+  // Estilos para la tarjeta de imágenes seleccionadas
   .selected-card {
     text-align: center;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f8f9fa;
+    transition: box-shadow 0.3s;
+    
+    &:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    img {
+      max-height: 120px;
+      object-fit: cover;
+      margin-bottom: 5px;
+    }
   }
   
-  .selected-card img {
-    max-height: 120px;
-    object-fit: cover;
+  // Estilos para la botonera
+  .button-group button {
+    min-width: 140px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
   
-  .btn-sm {
-    font-size: 12px;
+  // Ajustes de tipografía y espaciados generales
+  .api-response pre {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow: auto;
   }
+  
+  .text-center {
+    text-align: center;
+  }
+  

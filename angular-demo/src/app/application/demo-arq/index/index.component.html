@@ -5,7 +5,6 @@
       <div class="ng-select-container">
         <ng-select
           [items]="dogBreeds$ | async"
-          bindLabel="name"
           placeholder="Selecciona una raza..."
           [searchable]="true"
           [clearable]="true"
@@ -15,21 +14,20 @@
 
       <!-- Resultados de búsqueda -->
       <div class="row mt-3">
-        @if (dogData$ | async; as result) {
-          @if (result.status === 'success') {
-            @for (image of result.message.slice(0, 4); track image) {
-              <div class="col-md-3 mb-3">
-                <div class="dog-card" (click)="selectDogImage(image)">
-                  <img [src]="image" alt="Perro" class="img-fluid rounded selectable-image">
-                </div>
+        <ng-container *ngIf="dogData$ | async as result">
+          <ng-container *ngIf="result.status === 'success'; else errorTemplate">
+            <div class="col-md-3 mb-3" *ngFor="let image of result.message.slice(0, 4)">
+              <div class="dog-card" (click)="selectDogImage(image)">
+                <img [src]="image" alt="Perro" class="img-fluid rounded selectable-image">
               </div>
-            }
-          } @else {
+            </div>
+          </ng-container>
+          <ng-template #errorTemplate>
             <div class="col-12">
               <p class="text-danger text-center">{{ result.message }}</p>
             </div>
-          }
-        }
+          </ng-template>
+        </ng-container>
       </div>
     </app-card>
   </div>
@@ -40,22 +38,21 @@
   <div class="col-sm-12">
     <app-card cardTitle="Imágenes Seleccionadas 🐶" [options]="false">
       <div class="row">
-        @if (selectedDogs.length > 0) {
-          @for (image of selectedDogs; track image) {
-            <div class="col-md-3 mb-3">
-              <div class="dog-card selected-card">
-                <img [src]="image" alt="Perro seleccionado" class="img-fluid rounded">
-                <button class="btn btn-danger btn-sm mt-2" (click)="removeDogImage(image)">
-                  Quitar
-                </button>
-              </div>
+        <ng-container *ngIf="selectedDogs.length > 0; else emptyTemplate">
+          <div class="col-md-3 mb-3" *ngFor="let image of selectedDogs">
+            <div class="dog-card selected-card">
+              <img [src]="image" alt="Perro seleccionado" class="img-fluid rounded">
+              <button class="btn btn-danger btn-sm mt-2" (click)="removeDogImage(image)">
+                Quitar
+              </button>
             </div>
-          }
-        } @else {
+          </div>
+        </ng-container>
+        <ng-template #emptyTemplate>
           <div class="col-12">
             <p class="text-muted text-center">No has seleccionado ninguna imagen aún.</p>
           </div>
-        }
+        </ng-template>
       </div>
     </app-card>
   </div>
@@ -66,16 +63,10 @@
   <div class="col-sm-12">
     <app-card [options]="false" cardClass="bg-transparent">
       <div class="button-group d-flex justify-content-center gap-3">
-        <button 
-          class="btn btn-primary" 
-          (click)="loadData('api1')"
-        >
+        <button class="btn btn-primary" (click)="loadData('api1')">
           <i class="feather icon-download"></i> Cargar Posts
         </button>
-        <button 
-          class="btn btn-success" 
-          (click)="loadData('api2')"
-        >
+        <button class="btn btn-success" (click)="loadData('api2')">
           <i class="feather icon-users"></i> Cargar Usuarios
         </button>
       </div>
@@ -87,20 +78,20 @@
 <div class="row">
   <div class="col-sm-12">
     <app-card [cardTitle]="selectedApiTitle || 'Selecciona una API'" [options]="false">
-      @if (selectedData$ | async; as data) {
+      <ng-container *ngIf="selectedData$ | async as data">
         <div class="api-response">
-          @if (data.error) {
+          <ng-container *ngIf="data.error; else jsonTemplate">
             <p class="text-danger">{{ data.error }}</p>
-          } @else {
+          </ng-container>
+          <ng-template #jsonTemplate>
             <pre>{{ data | json }}</pre>
-          }
+          </ng-template>
         </div>
-      } @else {
-        <p>
-          "Haz clic en un botón para cargar datos de una API. 
-          Usamos programación reactiva con RxJS para manejar las solicitudes."
-        </p>
-      }
+      </ng-container>
+      <p *ngIf="!(selectedData$ | async)">
+        "Haz clic en un botón para cargar datos de una API. 
+        Usamos programación reactiva con RxJS para manejar las solicitudes."
+      </p>
     </app-card>
   </div>
 </div>

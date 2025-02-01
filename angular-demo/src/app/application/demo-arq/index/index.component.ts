@@ -6,13 +6,13 @@ import { FormControl } from '@angular/forms';
 import { DogResponse } from './interfaces/DogResponse';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-
 @Component({
   selector: 'app-index',
   imports: [SharedModule, NgSelectModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
+
 export class IndexComponent {
   // Control para el buscador de perros
   breedControl = new FormControl('');
@@ -20,28 +20,21 @@ export class IndexComponent {
   // Datos reactivos para perros
   dogData$!: Observable<DogResponse>;
   
-  // Mantenemos tus propiedades existentes
+  // Propiedades existentes
   selectedData$!: Observable<any>;
   selectedApiTitle: string = '';
-
-  // Lista de imágenes seleccionadas
   selectedDogs: string[] = [];
-
-  dogBreeds$: Observable<string[]> | undefined; // Nueva propiedad para la lista de razas
-
+  dogBreeds$!: Observable<string[]>;
 
   constructor(public apiService: ReactiveService) {
-    // Cargar todas las razas disponibles
     this.dogBreeds$ = this.apiService.getDogBreeds();
-
-    // Cuando el usuario selecciona una raza, se ejecuta la búsqueda
     this.dogData$ = this.breedControl.valueChanges.pipe(
       filter((breed): breed is string => !!breed && breed.trim() !== ''),
-      switchMap(breed => this.apiService.searchDogs(new Observable<string>(obs => obs.next(breed))))
+      switchMap(breed => this.apiService.searchDogs(of(breed)))
     );
   }
 
-   selectDogImage(imageUrl: string): void {
+  selectDogImage(imageUrl: string): void {
     if (!this.selectedDogs.includes(imageUrl)) {
       this.selectedDogs.push(imageUrl);
     }
@@ -51,7 +44,7 @@ export class IndexComponent {
     this.selectedDogs = this.selectedDogs.filter(img => img !== imageUrl);
   }
 
-  // Método existente para botones
+  // Método para cargar datos según API seleccionada
   loadData(apiType: string): void {
     switch(apiType) {
       case 'api1':
