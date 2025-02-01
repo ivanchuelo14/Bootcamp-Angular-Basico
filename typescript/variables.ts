@@ -2,7 +2,7 @@ let cliente: string = '';
 cliente = 'Eu';
 
 //Tuberias
-let numero: number  | string ; // Con esto | se puede manejar varios tipos de datos 
+let numero: number  | string | boolean; // Con esto | se puede manejar varios tipos de datos 
 numero = 1;
 
 //Arreglos

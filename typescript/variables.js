@@ -1,5 +1,6 @@
 var cliente = '';
 cliente = 'Eu';
+cliente = true;
 var numero = ''; // Con esto | se puede manejar varios tipos de datos 
 numero = 1;
 //Arreglos
@@ -15,3 +16,4 @@ var empleado = {
     fechaNacimiento: new Date() //Fecha hora actuales TS
 };
 console.table(empleado);
+
