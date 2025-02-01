@@ -9,49 +9,56 @@ import { DogResponse } from '../demo-arq/index/interfaces/DogResponse';
 export class ReactiveService {
 
   private http = inject(HttpClient);
+
   // URLs de APIs de ejemplo
-  private API_POSTS = 'https://jsonplaceholder.typicode.com/posts';
   private API_USERS = 'https://randomuser.me/api/?results=5';
-  private API_DOGS = 'https://dog.ceo/api/breeds/image/random/3';
+  private API_JOKES = 'https://api.chucknorris.io/jokes/random';
+  private API_ADVICE = 'https://api.adviceslip.com/advice';
 
   // Subjects para control reactivo
-  private postsTrigger = new Subject<void>();
   private usersTrigger = new Subject<void>();
-  private dogsTrigger = new Subject<void>();
+  private jokesTrigger = new Subject<void>();
+  private adviceTrigger = new Subject<void>();
 
   // Flujos reactivos
-  posts$ = this.postsTrigger.pipe(
-    switchMap(() => this.http.get(this.API_POSTS).pipe(
-      catchError(() => of({ error: 'Error al cargar posts' }))
-    ))
-  );
-
   users$ = this.usersTrigger.pipe(
-    switchMap(() => this.http.get(this.API_USERS).pipe(
-      catchError(() => of({ error: 'Error al cargar usuarios' }))
-    ))
+    switchMap(() =>
+      this.http.get(this.API_USERS).pipe(
+        catchError(() => of({ error: 'Error al cargar usuarios' }))
+      )
+    )
   );
 
-  dogs$ = this.dogsTrigger.pipe(
-    switchMap(() => this.http.get(this.API_DOGS).pipe(
-      catchError(() => of({ error: 'Error al cargar imágenes' }))
-    ))
+  jokes$ = this.jokesTrigger.pipe(
+    switchMap(() =>
+      this.http.get(this.API_JOKES).pipe(
+        catchError(() => of({ error: 'Error al cargar chistes' }))
+      )
+    )
   );
 
-  // Métodos públicos
-  getPosts(): Observable<any> {
-    this.postsTrigger.next();
-    return this.posts$;
-  }
+  advice$ = this.adviceTrigger.pipe(
+    switchMap(() =>
+      this.http.get(this.API_ADVICE).pipe(
+        catchError(() => of({ error: 'Error al cargar consejos' }))
+      )
+    )
+  );
 
+  // Métodos públicos para disparar las solicitudes
   getUsers(): Observable<any> {
     this.usersTrigger.next();
     return this.users$;
   }
 
-  getDogImages(): Observable<any> {
-    this.dogsTrigger.next();
-    return this.dogs$;
+  getJokes(): Observable<any> {
+    this.jokesTrigger.next();
+    return this.jokes$;
+  }
+
+  getAdvice(): Observable<any> {
+    this.adviceTrigger.next();
+    return this.advice$;
   }
 
   getDogBreeds(): Observable<string[]> {

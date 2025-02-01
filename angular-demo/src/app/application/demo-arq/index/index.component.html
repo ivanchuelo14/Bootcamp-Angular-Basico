@@ -60,14 +60,20 @@
 
 <!-- Botonera Reactiva -->
 <div class="row mb-4">
-  <div class="col-sm-12">
-    <app-card [options]="false" cardClass="bg-transparent">
+  <div class="col-12">
+    <app-card 
+      [options]="false"  
+      cardTitle="Flujo Reactivo de APIs ⚛️" 
+      cardClass="bg-transparent">
       <div class="button-group d-flex justify-content-center gap-3">
         <button class="btn btn-primary" (click)="loadData('api1')">
-          <i class="feather icon-download"></i> Cargar Posts
+          <i class="feather icon-alert-circle"></i> Cargar Consejo
         </button>
         <button class="btn btn-success" (click)="loadData('api2')">
           <i class="feather icon-users"></i> Cargar Usuarios
+        </button>
+        <button class="btn btn-warning" (click)="loadData('api3')">
+          <i class="feather icon-smile"></i> Cargar Chiste
         </button>
       </div>
     </app-card>
@@ -89,8 +95,7 @@
         </div>
       </ng-container>
       <p *ngIf="!(selectedData$ | async)">
-        "Haz clic en un botón para cargar datos de una API. 
-        Usamos programación reactiva con RxJS para manejar las solicitudes."
+        Haz clic en un botón para cargar datos de una API. Usamos programación reactiva con RxJS para manejar las solicitudes.
       </p>
     </app-card>
   </div>

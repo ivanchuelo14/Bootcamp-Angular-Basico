@@ -44,19 +44,24 @@ export class IndexComponent {
     this.selectedDogs = this.selectedDogs.filter(img => img !== imageUrl);
   }
 
-  // Método para cargar datos según API seleccionada
-  loadData(apiType: string): void {
-    switch(apiType) {
-      case 'api1':
-        this.selectedApiTitle = 'Posts de JSONPlaceholder';
-        this.selectedData$ = this.apiService.getPosts();
-        break;
-      case 'api2':
-        this.selectedApiTitle = 'Usuarios Aleatorios';
-        this.selectedData$ = this.apiService.getUsers();
-        break;
-      default:
-        this.selectedData$ = of({ error: 'API no válida' });
-    }
+// Método para cargar datos según API seleccionada
+loadData(apiType: string): void {
+  switch(apiType) {
+    case 'api1':
+      this.selectedApiTitle = 'Consejo del Día';
+      this.selectedData$ = this.apiService.getAdvice();
+      break;
+    case 'api2':
+      this.selectedApiTitle = 'Usuarios Aleatorios';
+      this.selectedData$ = this.apiService.getUsers();
+      break;
+    case 'api3':
+      this.selectedApiTitle = 'Chiste Aleatorio';
+      this.selectedData$ = this.apiService.getJokes();
+      break;
+    default:
+      this.selectedApiTitle = 'API no válida';
+      this.selectedData$ = of({ error: 'API no válida' });
   }
+}
 }
