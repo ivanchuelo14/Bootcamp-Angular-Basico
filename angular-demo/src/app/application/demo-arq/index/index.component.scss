@@ -31,3 +31,29 @@
       }
     }
   }
+
+  .selectable-image {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .selectable-image:hover {
+    transform: scale(1.1);
+  }
+  
+  .selected-card {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+  
+  .selected-card img {
+    max-height: 120px;
+    object-fit: cover;
+  }
+  
+  .btn-sm {
+    font-size: 12px;
+  }

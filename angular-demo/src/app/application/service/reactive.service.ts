@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged, Observable, of, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap } from 'rxjs';
 import { DogResponse } from '../demo-arq/index/interfaces/DogResponse';
 
 @Injectable({
@@ -54,6 +54,13 @@ export class ReactiveService {
     return this.dogs$;
   }
 
+  getDogBreeds(): Observable<string[]> {
+    return this.http.get<{ message: Record<string, string[]> }>('https://dog.ceo/api/breeds/list/all').pipe(
+      map(response => Object.keys(response.message)), // Extraer solo los nombres de las razas
+      catchError(() => of([])) // En caso de error, devolver un array vacío
+    );
+  }
+  
   // Método para buscar perros
   searchDogs(breed$: Observable<string>): Observable<DogResponse> {
     return breed$.pipe(

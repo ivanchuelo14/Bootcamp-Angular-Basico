@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ReactiveService } from '../../service/reactive.service';
-import { Observable, of, filter } from 'rxjs';
+import { Observable, of, filter, switchMap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { DogResponse } from './interfaces/DogResponse';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @Component({
   selector: 'app-index',
-  imports: [SharedModule],
+  imports: [SharedModule, NgSelectModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
@@ -23,14 +24,31 @@ export class IndexComponent {
   selectedData$!: Observable<any>;
   selectedApiTitle: string = '';
 
+  // Lista de imágenes seleccionadas
+  selectedDogs: string[] = [];
+
+  dogBreeds$: Observable<string[]> | undefined; // Nueva propiedad para la lista de razas
+
 
   constructor(public apiService: ReactiveService) {
-    // Configuramos el buscador de perros
-    this.dogData$ = this.apiService.searchDogs(
-      this.breedControl.valueChanges.pipe(
-        filter((term): term is string => !!term && term.trim() !== '')
-      )
+    // Cargar todas las razas disponibles
+    this.dogBreeds$ = this.apiService.getDogBreeds();
+
+    // Cuando el usuario selecciona una raza, se ejecuta la búsqueda
+    this.dogData$ = this.breedControl.valueChanges.pipe(
+      filter((breed): breed is string => !!breed && breed.trim() !== ''),
+      switchMap(breed => this.apiService.searchDogs(new Observable<string>(obs => obs.next(breed))))
     );
+  }
+
+   selectDogImage(imageUrl: string): void {
+    if (!this.selectedDogs.includes(imageUrl)) {
+      this.selectedDogs.push(imageUrl);
+    }
+  }
+
+  removeDogImage(imageUrl: string): void {
+    this.selectedDogs = this.selectedDogs.filter(img => img !== imageUrl);
   }
 
   // Método existente para botones
@@ -43,10 +61,6 @@ export class IndexComponent {
       case 'api2':
         this.selectedApiTitle = 'Usuarios Aleatorios';
         this.selectedData$ = this.apiService.getUsers();
-        break;
-      case 'api3':
-        this.selectedApiTitle = 'Nombres de Perros';
-        this.selectedData$ = this.apiService.getDogImages();
         break;
       default:
         this.selectedData$ = of({ error: 'API no válida' });
