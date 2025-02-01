@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'main',
-        loadComponent: () => import('./demo/dashboard/dash-analytics.component')
+        loadComponent: () => import('./application/demo-arq/index/index.component').then(x => x.IndexComponent)
       },
       {
         path: 'component',

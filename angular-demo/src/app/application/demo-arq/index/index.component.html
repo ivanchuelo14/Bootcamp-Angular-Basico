@@ -1,0 +1,95 @@
+<!-- <div class="row">
+
+  @for (card of cards; track card) {
+    <div class="col-md-6 col-xl-3">
+      <app-card [hidHeader]="true" cardClass="{{ card.background }} order-card">
+
+      </app-card>
+    </div>
+  }
+</div> -->
+
+<!-- Agrega esto después de tus cards estáticas -->
+<div class="row mb-4">
+  <div class="col-sm-12">
+    <app-card cardTitle="Buscador de Razas Caninas 🐕" [options]="false">
+      <div class="input-group">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Escribe una raza (ej: beagle, husky)"
+          [formControl]="breedControl"
+        >
+      </div>
+      
+      <!-- Resultados de perros -->
+      <div class="row mt-3">
+        @if (dogData$ | async; as result) {
+          @if (result.status === 'success') {
+            @for (image of result.message.slice(0, 4); track image) {
+              <div class="col-md-3 mb-3">
+                <div class="dog-card">
+                  <img [src]="image" alt="Perro" class="img-fluid rounded">
+                </div>
+              </div>
+            }
+          } @else {
+            <div class="col-12">
+              <p class="text-danger text-center">{{ result.message }}</p>
+            </div>
+          }
+        }
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!-- Botonera Reactiva -->
+<div class="row mb-4">
+  <div class="col-sm-12">
+    <app-card [options]="false" cardClass="bg-transparent">
+      <div class="button-group d-flex justify-content-center gap-3">
+        <button 
+          class="btn btn-primary" 
+          (click)="loadData('api1')"
+        >
+          <i class="feather icon-download"></i> Cargar Posts
+        </button>
+        <button 
+          class="btn btn-success" 
+          (click)="loadData('api2')"
+        >
+          <i class="feather icon-users"></i> Cargar Usuarios
+        </button>
+        <button 
+          class="btn btn-danger" 
+          (click)="loadData('api3')"
+        >
+          <i class="feather icon-image"></i> Cargar Imágenes
+        </button>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!-- Tarjeta de Descripción Dinámica -->
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [cardTitle]="selectedApiTitle || 'Selecciona una API'" [options]="false">
+      @if (selectedData$ | async; as data) {
+        <div class="api-response">
+          @if (data.error) {
+            <p class="text-danger">{{ data.error }}</p>
+          } @else {
+            <pre>{{ data | json }}</pre>
+          }
+        </div>
+      } @else {
+        <p>
+          "Haz clic en un botón para cargar datos de una API. 
+          Usamos programación reactiva con RxJS para manejar las solicitudes."
+        </p>
+      }
+    </app-card>
+  </div>
+</div>
