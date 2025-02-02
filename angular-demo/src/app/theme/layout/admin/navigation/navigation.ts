@@ -28,9 +28,22 @@ export const NavigationItems: NavigationItem[] = [
       {
         id: 'dashboard',
         title: 'Home',
-        type: 'item',
-        url: '/main',
-        icon: 'feather icon-home'
+        type: 'collapse',
+        icon: 'feather icon-home',
+        children: [
+          {
+            id: 'button',
+            title: 'Detalle',
+            type: 'item',
+            url: '/main',
+          },
+          {
+            id: 'badges',
+            title: 'Performance',
+            type: 'item',
+            url: '/performance'
+          }
+        ]
       }
     ]
   },

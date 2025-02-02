@@ -1,0 +1,16 @@
+<app-card cardTitle="📡 Comparación de Métodos para Llamar APIs" [options]="false">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Método</th>
+                <th>Tiempo de ejecución (ms)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let result of executionResults">
+                <td>{{ result.method }}</td>
+                <td>{{ result.time | number:'1.2-2' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</app-card>

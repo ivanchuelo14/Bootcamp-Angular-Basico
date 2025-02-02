@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, firstValueFrom, map, Observable, of, Subject, switchMap } from 'rxjs';
 import { DogResponse } from '../demo-arq/index/interfaces/DogResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReactiveService {
-
   private http = inject(HttpClient);
 
   // URLs de APIs de ejemplo
@@ -20,7 +19,7 @@ export class ReactiveService {
   private jokesTrigger = new Subject<void>();
   private adviceTrigger = new Subject<void>();
 
-  // Flujos reactivos
+  // Flujos reactivos (Observables)
   users$ = this.usersTrigger.pipe(
     switchMap(() =>
       this.http.get(this.API_USERS).pipe(
@@ -45,7 +44,7 @@ export class ReactiveService {
     )
   );
 
-  // Métodos públicos para disparar las solicitudes
+  // Métodos públicos para disparar las solicitudes (Observable)
   getUsers(): Observable<any> {
     this.usersTrigger.next();
     return this.users$;
@@ -61,14 +60,15 @@ export class ReactiveService {
     return this.advice$;
   }
 
+  // Método para obtener las razas de perros (Observable)
   getDogBreeds(): Observable<string[]> {
     return this.http.get<{ message: Record<string, string[]> }>('https://dog.ceo/api/breeds/list/all').pipe(
-      map(response => Object.keys(response.message)), // Extraer solo los nombres de las razas
-      catchError(() => of([])) // En caso de error, devolver un array vacío
+      map(response => Object.keys(response.message)),
+      catchError(() => of([]))
     );
   }
   
-  // Método para buscar perros
+  // Método para buscar perros (Observable)
   searchDogs(breed$: Observable<string>): Observable<DogResponse> {
     return breed$.pipe(
       debounceTime(500),
@@ -77,12 +77,46 @@ export class ReactiveService {
         this.http.get<DogResponse>(`https://dog.ceo/api/breed/${breed}/images`).pipe(
           catchError(() => 
             of({
-              status: 'error' as const, // Forzamos el tipo literal 'error'
+              status: 'error' as const,
               message: ['No se encontraron imágenes para esta raza']
             })
           )
         )
       )
     );
+  }
+
+  // Métodos adicionales usando Promesas (enfoque basado en promesas)
+  async getUsersPromise(): Promise<any> {
+    try {
+      //firstValueFrom para convertir el observable en una promesa
+      return await firstValueFrom(this.http.get(this.API_USERS));
+    } catch (error) {
+      return { error: 'Error al cargar usuarios (Promise)' };
+    }
+  }
+
+  async getJokesPromise(): Promise<any> {
+    try {
+      return await firstValueFrom(this.http.get(this.API_JOKES));
+    } catch (error) {
+      return { error: 'Error al cargar chistes (Promise)' };
+    }
+  }
+
+  async getAdvicePromise(): Promise<any> {
+    try {
+      return await firstValueFrom(this.http.get(this.API_ADVICE));
+    } catch (error) {
+      return { error: 'Error al cargar consejos (Promise)' };
+    }
+  }
+
+  // Ejemplo básico usando suscripción (Callback) – NO RECOMENDADO para lógica en servicios,
+  getUsersWithSubscription(callback: (data: any) => void): void {
+    this.http.get(this.API_USERS).subscribe({
+      next: (data) => callback(data),
+      error: () => callback({ error: 'Error al cargar usuarios (Callback)' })
+    });
   }
 }

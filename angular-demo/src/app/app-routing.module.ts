@@ -21,6 +21,10 @@ const routes: Routes = [
         loadComponent: () => import('./application/demo-arq/index/index.component').then(x => x.IndexComponent)
       },
       {
+        path: 'performance',
+        loadComponent: () => import('./application/demo-arq/performance/performance.component').then(x => x.PerformanceComponent)
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },
