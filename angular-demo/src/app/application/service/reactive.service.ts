@@ -86,6 +86,11 @@ export class ReactiveService {
     );
   }
 
+  // Método para buscar perros por raza observable de otra manera 
+  searchDog(breed: string): Observable<DogResponse> {
+      return this.http.get<DogResponse>(`https://dog.ceo/api/breeds/image/random/4?breed=${breed}`);
+  }
+
   // Métodos adicionales usando Promesas (enfoque basado en promesas)
   async getUsersPromise(): Promise<any> {
     try {

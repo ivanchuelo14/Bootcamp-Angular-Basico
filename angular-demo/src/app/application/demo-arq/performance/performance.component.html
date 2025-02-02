@@ -1,16 +1,69 @@
+<!-- Card del Formulario Reactivo para Buscar Razas de Perros -->
+  <app-card cardTitle="🔍 Buscar Razas de Perros" [options]="false">
+    <!-- Formulario Reactivo -->
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="breed">Buscar Raza</label>
+        <input 
+          id="breed" 
+          class="form-control" 
+          formControlName="breed" 
+          placeholder="Escribe una raza de perro..." 
+        />
+      </div>
+  
+      <div class="form-group mt-3">
+        <label for="info">Información Adicional</label>
+        <input 
+          id="info" 
+          class="form-control" 
+          formControlName="info" 
+          placeholder="Escribe algo más..." 
+        />
+        <!-- Aquí reflejamos el valor del segundo input -->
+        <p class="mt-2 text-muted">Valor ingresado: {{ searchForm.get('info')?.value }}</p>
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="searchForm.invalid">
+        Buscar
+      </button>
+
+       <!-- Botón para limpiar el formulario -->
+    <button type="button" class="btn btn-secondary mt-3" (click)="onReset()">
+        Limpiar
+    </button>
+      
+    </form>
+  
+    <!-- Resultados de búsqueda de perros -->
+    <div *ngIf="dogData && dogData.length > 0" class="mt-4">
+      <div *ngFor="let dog of dogData" class="dog-card mb-3">
+        <img [src]="dog" alt="Perro" class="img-fluid rounded">
+        <p>{{ dog.name }}</p>
+      </div>
+    </div>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="searchError" class="mt-4 text-danger">
+      <p>Error al buscar la raza de perro. Intenta de nuevo.</p>
+    </div>
+</app-card>
+  
+
+  <!-- Card de Comparación de Métodos para Llamar APIs -->
 <app-card cardTitle="📡 Comparación de Métodos para Llamar APIs" [options]="false">
     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Método</th>
-                <th>Tiempo de ejecución (ms)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let result of executionResults">
-                <td>{{ result.method }}</td>
-                <td>{{ result.time | number:'1.2-2' }}</td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Método</th>
+          <th>Tiempo de ejecución (ms)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of executionResults">
+          <td>{{ result.method }}</td>
+          <td>{{ result.time | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
     </table>
 </app-card>

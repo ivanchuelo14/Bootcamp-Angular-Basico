@@ -34,4 +34,9 @@ export class PerformanceService {
       return { error: 'Error al cargar usuarios' };
     }
   }
+
+  // ✅ 4. HttpClient con Observables sin pipe
+  getUsersWithHttpClientSinPipe(): Observable<any> {
+        return this.http.get<any>(this.API_USERS);
+  }
 }
